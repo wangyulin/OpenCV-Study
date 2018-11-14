@@ -70,8 +70,11 @@ public class StudySection_2 extends OpenCVProcessBase {
         Mat sourceImage = Imgcodecs.imread(this.p_test_file_path + "/5cent.jpg", Imgcodecs.CV_LOAD_IMAGE_COLOR);
 
         // 划线，设置2个点，分别为开始点，结束点，设置线条颜色
-        Imgproc.rectangle(sourceImage, new Point(30, 30), new Point(500, 500), new Scalar(0, 255, 0));
-
+        Imgproc.rectangle(sourceImage, new Point(220, 650), new Point(450, 400),
+                new Scalar(0, 255, 0), 1,Imgproc.LINE_AA,1);
+        /*Imgproc.line(sourceImage, new Point(0,0),
+                new Point(10,10), new Scalar(0, 128, 0, 100), 10);*/
+        //cv2.line(img,(0,0),(511,511),(255,0,0),5)
         this.saveImage(this.save_dir + "/ROI_draw_area.png", sourceImage);
     }
 
