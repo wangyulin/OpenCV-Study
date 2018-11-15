@@ -1,10 +1,18 @@
 package com.wyl.opencv.first;
 
+import com.wyl.opencv.base.ImageViewer;
 import com.wyl.opencv.base.OpenCVProcessBase;
 import org.junit.Test;
 import org.opencv.core.*;
+import org.opencv.core.Point;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Auther: wangyulin
@@ -37,9 +45,16 @@ public class StudySection_2 extends OpenCVProcessBase {
      * 此方式读取图像后，为原始未转化的图像
      */
     @Test
-    public void readImage_1() {
+    public void readImage_1() throws Exception {
 
         Mat sourceImage = Imgcodecs.imread(this.p_test_file_path + "/5cent.jpg");
+        // dataAddr() 如果等于0，则说明图像文件加载失败
+        if(sourceImage.dataAddr() == 0) {
+            throw new Exception ("Couldn't open file " + (this.p_test_file_path + "/5cent.jpg"));
+        }
+
+        ImageViewer imageViewer = new ImageViewer();
+        imageViewer.show(sourceImage, "WYL");
         //输出文件
         this.saveImage(this.save_dir + "/read_image_fn_1.png", sourceImage);
     }
@@ -68,7 +83,7 @@ public class StudySection_2 extends OpenCVProcessBase {
 
         // 读取彩色图
         Mat sourceImage = Imgcodecs.imread(this.p_test_file_path + "/5cent.jpg", Imgcodecs.CV_LOAD_IMAGE_COLOR);
-
+        sourceImage.dataAddr();
         // 划线，设置2个点，分别为开始点，结束点，设置线条颜色
         Imgproc.rectangle(sourceImage, new Point(220, 650), new Point(450, 400),
                 new Scalar(0, 255, 0), 1,Imgproc.LINE_AA,1);
